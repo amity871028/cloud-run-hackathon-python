@@ -22,7 +22,7 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-moves = ['F', 'T', 'L', 'R']
+moves = ['F', 'T', 'L', 'R', 'T', 'T']
 
 @app.route("/", methods=['GET'])
 def index():
@@ -32,6 +32,8 @@ def index():
 def move():
     request.get_data()
     logger.info(request.json)
+    if request.json['arena']['state']['https://cloud-run-hackathon-python-tgqagz7tya-uc.a.run.app']['wasHit']:
+        return 'T'
     return moves[random.randrange(len(moves))]
 
 if __name__ == "__main__":
